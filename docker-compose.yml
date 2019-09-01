@@ -2,15 +2,19 @@ version: '3'
 volumes:
   postgres_data: {}
   redis_data: {}
+  public_assets: {}
 services:
   app:
     build:
       context: .
+    image: homeland_app
     depends_on:
       - db
       - redis
     ports:
       - 3000:3000
+    volumes:
+      - public_assets:/var/www/homeland/public/assets
   db:
     image: postgres
     volumes:
@@ -27,3 +31,5 @@ services:
       - app
     ports:
       - 80:80
+    volumes:
+      - public_assets:/var/www/homeland/public/assets

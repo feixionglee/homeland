@@ -10,19 +10,20 @@ RUN apk --update add ca-certificates nodejs tzdata imagemagick &&\
 
 RUN curl https://get.acme.sh | sh
 
+ENV RAILS_ROOT /var/www/homeland
 ENV RAILS_ENV "production"
 ENV HOMELAND_VERSION "master"
 
-WORKDIR /var/www/homeland
+RUN mkdir -p $RAILS_ROOT
+WORKDIR $RAILS_ROOT
 
-RUN mkdir -p /var/www &&\
-		find / -type f -iname '*.apk-new' -delete &&\
+RUN find / -type f -iname '*.apk-new' -delete &&\
 		rm -rf '/var/cache/apk/*' '/tmp/*' '/var/lib/apt/lists/*'
 
-ADD Gemfile Gemfile.lock /var/www/homeland/
+ADD Gemfile Gemfile.lock $RAILS_ROOT/
 RUN bundle install --deployment --jobs 20 --retry 5 &&\
 		find /var/www/homeland/vendor/bundle -name tmp -type d -exec rm -rf {} +
-ADD . /var/www/homeland
+ADD . $RAILS_ROOT/
 
 RUN rm -Rf /var/www/homeland/vendor/cache
 
