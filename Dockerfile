@@ -13,20 +13,20 @@ RUN curl https://get.acme.sh | sh
 ENV RAILS_ENV "production"
 ENV HOMELAND_VERSION "master"
 
-WORKDIR /home/app/homeland
+WORKDIR /var/www/homeland
 
-RUN mkdir -p /home/app &&\
+RUN mkdir -p /var/www &&\
 		find / -type f -iname '*.apk-new' -delete &&\
 		rm -rf '/var/cache/apk/*' '/tmp/*' '/var/lib/apt/lists/*'
 
-ADD Gemfile Gemfile.lock /home/app/homeland/
+ADD Gemfile Gemfile.lock /var/www/homeland/
 RUN bundle install --deployment --jobs 20 --retry 5 &&\
-		find /home/app/homeland/vendor/bundle -name tmp -type d -exec rm -rf {} +
-ADD . /home/app/homeland
+		find /var/www/homeland/vendor/bundle -name tmp -type d -exec rm -rf {} +
+ADD . /var/www/homeland
 
-RUN rm -Rf /home/app/homeland/vendor/cache
+RUN rm -Rf /var/www/homeland/vendor/cache
 
-RUN bundle exec rails assets:precompile RAILS_ENV=production SECRET_KEY_BASE=fake_secure_for_compile
+RUN bundle exec rails assets:precompile RAILS_ENV=production SECRET_KEY_BASE=bccfa7ece4826519009ebc132653b6db
 
 EXPOSE 3000
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
