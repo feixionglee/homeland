@@ -3,6 +3,9 @@ default: &default
   pool: <%= ENV["DATABASE_POOL"] || 64 %>
   timeout: 5000
   encoding: utf-8
+  username: postgres
+  password:
+  host: db
 
 development:
   <<: *default
@@ -17,3 +20,4 @@ test:
 
 production:
   <<: *default
+  database: luda
