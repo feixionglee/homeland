@@ -12,6 +12,16 @@
   </p>
 </p>
 
+## Development
+
+```shell
+** for production
+> docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+** for development
+> docker-compose up -d
+```
+
 ## Deployment
 
 Please visit https://gethomeland.com get more documents.

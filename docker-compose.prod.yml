@@ -1,0 +1,12 @@
+version: '3'
+
+volumes:
+  rails_app: {}
+
+services:
+  app:
+    volumes:
+      - rails_app:/var/www/homeland
+  web:
+    volumes:
+      - rails_app:/var/www/homeland
