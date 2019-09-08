@@ -5,6 +5,8 @@ volumes:
 
 services:
   app:
+    environment:
+      RAILS_ENV: production
     volumes:
       - rails_app:/var/www/homeland
   web:

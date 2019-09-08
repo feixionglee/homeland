@@ -11,7 +11,6 @@ RUN apk --update add ca-certificates nodejs tzdata imagemagick &&\
 RUN curl https://get.acme.sh | sh
 
 ENV RAILS_ROOT /var/www/homeland
-ENV RAILS_ENV "production"
 ENV HOMELAND_VERSION "master"
 
 RUN mkdir -p $RAILS_ROOT
