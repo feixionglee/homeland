@@ -1,8 +1,9 @@
 version: '3'
+
 volumes:
-  postgres_data: {}
-  redis_data: {}
-  bundler_gems: {}
+  postgres_data:
+  redis_data:
+
 services:
   app:
     build:
@@ -13,10 +14,6 @@ services:
       - redis
     ports:
       - 3000:3000
-    environment:
-      RAILS_ENV: development
-    volumes:
-      - bundler_gems:/usr/local/bundle
   db:
     image: postgres
     volumes:

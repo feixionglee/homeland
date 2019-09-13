@@ -16,17 +16,12 @@ ENV HOMELAND_VERSION "master"
 RUN mkdir -p $RAILS_ROOT
 WORKDIR $RAILS_ROOT
 
-RUN find / -type f -iname '*.apk-new' -delete &&\
-		rm -rf '/var/cache/apk/*' '/tmp/*' '/var/lib/apt/lists/*'
-
 ADD Gemfile Gemfile.lock $RAILS_ROOT/
 RUN gem install bundler
 RUN bundle install --jobs 20 --retry 5
-ADD . $RAILS_ROOT/
-
-RUN rm -Rf /var/www/homeland/vendor/cache
-
 RUN bundle exec rails assets:precompile RAILS_ENV=production SECRET_KEY_BASE=bccfa7ece4826519009ebc132653b6db
+
+ADD . $RAILS_ROOT
 
 EXPOSE 3000
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
