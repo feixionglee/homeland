@@ -1,5 +1,5 @@
 defaults: &defaults
-  host: <%= ENV["ELASTICSEARCH_HOST"] || "127.0.0.1:9200" %>
+  host: es
 
 development:
   <<: *defaults
