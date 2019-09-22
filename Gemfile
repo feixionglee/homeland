@@ -137,6 +137,7 @@ group :development do
 end
 
 group :development, :test do
+  gem "byebug"
   gem "sdoc"
   gem "capybara"
   gem "database_cleaner"
